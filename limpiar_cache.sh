@@ -13,13 +13,13 @@ echo -e "${cian}LIMPIEZA DE ARCHIVOS TEMPORALES${reset}"
 sleep 1
 
 # ===  Pide carpeta al usuario ===
-echo -e "${azul}Ingresá la ruta de la carpeta donde realizar cambios:${reset}"
+echo -e "${azul}Ingrese la ruta de la carpeta donde realizar cambios:${reset}"
 read -p "Carpeta: " carpeta
 echo ""
 
 # Verificar que exista
 if [ ! -d "$carpeta" ]; then
-    echo -e "${rojo} Error: la carpeta no existe.${reset}"
+    echo -e "${rojo}Error: la carpeta no existe.${reset}"
     read -p "Presione ENTER para salir..." _
     exit 1
 fi
@@ -32,7 +32,8 @@ archivos=$(find "$carpeta" -type f \( -name "*.tmp" -o -name "*.log" -o -name "*
 
 if [ -z "$archivos" ]; then
     echo -e "${verde}No se encontraron archivos temporales.${reset}"
-    read -p " Presione ENTER para volver al menú..." _
+    echo -e "\nPresione ${verde}ENTER${reset} para volver al menú..."
+    read
     exit 0
 fi
 
@@ -41,7 +42,7 @@ echo ""
 echo -e "${azul}Archivos encontrados:${reset}"
 echo "$archivos"
 echo ""
-echo -e -n "${amarillo} ¿Querés eliminar estos archivos? (s/n):${reset}"
+echo -e -n "${amarillo}¿Querés eliminar estos archivos? (s/n):${reset}"
 read confirmar 
 
 # === Borrar si confirma ===
@@ -60,4 +61,5 @@ fi
 echo ""
 echo -e "${azul}Proceso finalizado:${reset} $carpeta"
 echo ""
-read -p "Presione ENTER para volver al menú..." _
+echo -e "\nPresione ${verde}ENTER${reset} para volver al menú..."
+read
