@@ -1,12 +1,19 @@
 #!/bin/bash
 
-# --- Configuración ---
-LOG_FILE="system_usage_$(date +%Y%m%d_%H%M%S).log"
+# --- Configuración de Directorio y Archivo ---
+# 1. Nombre de la carpeta de destino
+TARGET_DIR="Rendimiento" 
+# 2. Nombre del archivo de log, incluyendo la carpeta
+LOG_FILE="$TARGET_DIR/system_usage_$(date +%Y%m%d_%H%M%S).log"
 DATE_FORMAT="%Y-%m-%d %H:%M:%S"
 
+# 3. Crear la carpeta si no existe
+mkdir -p "$TARGET_DIR"
+
 # --- Encabezado del informe ---
+# Usamos "$LOG_FILE" para todas las salidas
 echo "=================================================" > "$LOG_FILE"
-echo "        INFORME DE USO DEL SISTEMA (Optimizado para Git Bash)" >> "$LOG_FILE"
+echo "         INFORME DE USO DEL SISTEMA " >> "$LOG_FILE"
 echo "=================================================" >> "$LOG_FILE"
 echo "Fecha y Hora del Informe: $(date +"$DATE_FORMAT")" >> "$LOG_FILE"
 
@@ -68,7 +75,7 @@ fi
 echo "-------------------------------------------------" >> "$LOG_FILE"
 
 
-# --- 3. Uso del Disco (Este ya funcionaba) ---
+# --- 3. Uso del Disco ---
 echo "### USO DEL DISCO (Sistema de Archivos) ###" >> "$LOG_FILE"
 if command -v df >/dev/null 2>&1; then
     df -h -x tmpfs -x devtmpfs | grep -E '^Filesystem|/mnt/|C:|/d|/e|/' >> "$LOG_FILE"
